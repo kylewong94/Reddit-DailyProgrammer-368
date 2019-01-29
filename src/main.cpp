@@ -11,6 +11,6 @@ int main()
 	Randomized_Grid.Generate(6);
 	
 	//Solves Grid 
-//	Randomized_Grid.Solvable();
+	Randomized_Grid.Solvable();
 }
 

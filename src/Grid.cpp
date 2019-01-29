@@ -64,6 +64,21 @@ void Grid::Generate(int nValue)
 ////////////////////////////////////////////////////////////////////////////
 void Grid::Solvable()
 {
+	bool X = SolveX();
+	bool O = SolveO();
+
+	if (X == true)
+	{
+		printf("\nGrid is not a valid output, four cells X's or O's formed a square \n");
+	}
+	else if (O == true)
+	{
+		printf("\nGrid is not a valid output, four cells X's or O's formed a square\n");
+	}
+	else
+	{
+		printf("\nGrid is a valid output no four cells formed a square\n");
+	}
 }
 ////////////////////////////////////////////////////////////////////////////
 // UTILITIES
@@ -99,13 +114,161 @@ void Grid::Print()
 ////////////////////////////////////////////////////////////////////////////
 bool Grid::SolveX()
 {
+	//Search by Left-Down Diagonal Gradient
+	int BoundMax = n;
+	for (int TileNo = 0; TileNo < n-2; TileNo++)
+		{
+			GridNo = TileNo*n + TileNo;
+			for(int GapCheck = 1; GapCheck < BoundMax; GapCheck++)
+			{
+				AxisAlignVal = 0;
+			
+				AxisAlignVal += int(GridImage[TileNo*n + (TileNo + GapCheck)]);
+		
+				AxisAlignVal += int(GridImage[(TileNo + GapCheck)*n + (TileNo + GapCheck)]);
+
+				AxisAlignVal += int(GridImage[(TileNo + GapCheck)*n + TileNo]);
+
+				AxisAlignVal += int(GridImage[GridNo]);
+
+				if (AxisAlignVal == XValueCheck)
+				{
+					return true;
+				}
+			}
+			BoundMax--;
+		}	
+
+	//Search by Right Down Diagonal Gradient
+	BoundMax = n;
+	for (int TileNo = n - 1; TileNo > 0; TileNo--)
+		{
+			GridNo = TileNo*n + TileNo;
+			for(int GapCheck = 1; GapCheck < BoundMax; GapCheck++)
+			{
+				AxisAlignVal = 0;
 	
+				AxisAlignVal += int(GridImage[TileNo*n + (TileNo - GapCheck)]);
+
+				AxisAlignVal += int(GridImage[(TileNo - GapCheck)*n + (TileNo - GapCheck)]);
+
+				AxisAlignVal += int(GridImage[(TileNo - GapCheck)*n + TileNo]);
+
+				AxisAlignVal += int(GridImage[GridNo]);
+
+				if(AxisAlignVal == XValueCheck)
+				{
+					return true;
+				}
+			}
+			BoundMax--;
+		}
+
+	//Search By Column
+	for (int ColNo = 0; ColNo < n - 1; ColNo++)
+		{
+			for(int RowNo = 0; RowNo < n - 1; RowNo++)
+			{
+				GridNo = RowNo*n + ColNo;
+				
+				AxisAlignVal = 0;
+		
+				AxisAlignVal += int(GridImage[RowNo*n + (ColNo + 1)]);
+
+				AxisAlignVal += int(GridImage[(RowNo+1)*n + ColNo]);
+
+				AxisAlignVal += int(GridImage[(RowNo+1)*n + ColNo+1]);
+				
+				AxisAlignVal += int(GridImage[GridNo]);
+
+				if(AxisAlignVal == XValueCheck)
+				{
+					return true;
+				}
+			}
+		}
+	//Searches Failed
+	return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////
 bool Grid::SolveO()
 {
+	//Search by Left-Down Diagonal Gradient
+	int BoundMax = n;
+	for (int TileNo = 0; TileNo < n-2; TileNo++)
+		{
+			GridNo = TileNo*n + TileNo;
+			for(int GapCheck = 1; GapCheck < BoundMax; GapCheck++)
+			{
+				AxisAlignVal = 0;
+			
+				AxisAlignVal += int(GridImage[TileNo*n + (TileNo + GapCheck)]);
+		
+				AxisAlignVal += int(GridImage[(TileNo + GapCheck)*n + (TileNo + GapCheck)]);
 
+				AxisAlignVal += int(GridImage[(TileNo + GapCheck)*n + TileNo]);
+
+				AxisAlignVal += int(GridImage[GridNo]);
+
+				if (AxisAlignVal == OValueCheck)
+				{
+					return true;
+				}
+			}
+			BoundMax--;
+		}	
+
+	//Search by Right Down Diagonal Gradient
+	BoundMax = n;
+	for (int TileNo = n - 1; TileNo > 0; TileNo--)
+		{
+			GridNo = TileNo*n + TileNo;
+			for(int GapCheck = 1; GapCheck < BoundMax; GapCheck++)
+			{
+				AxisAlignVal = 0;
+	
+				AxisAlignVal += int(GridImage[TileNo*n + (TileNo - GapCheck)]);
+
+				AxisAlignVal += int(GridImage[(TileNo - GapCheck)*n + (TileNo - GapCheck)]);
+
+				AxisAlignVal += int(GridImage[(TileNo - GapCheck)*n + TileNo]);
+
+				AxisAlignVal += int(GridImage[GridNo]);
+
+				if(AxisAlignVal == OValueCheck)
+				{
+					return true;
+				}
+			}
+			BoundMax--;
+		}
+
+	//Search By Column
+	for (int ColNo = 0; ColNo < n - 1; ColNo++)
+		{
+			for(int RowNo = 0; RowNo < n - 1; RowNo++)
+			{
+				GridNo = RowNo*n + ColNo;
+				
+				AxisAlignVal = 0;
+		
+				AxisAlignVal += int(GridImage[RowNo*n + (ColNo + 1)]);
+
+				AxisAlignVal += int(GridImage[(RowNo+1)*n + ColNo]);
+
+				AxisAlignVal += int(GridImage[(RowNo+1)*n + ColNo+1]);
+				
+				AxisAlignVal += int(GridImage[GridNo]);
+
+				if(AxisAlignVal == OValueCheck)
+				{
+					return true;
+				}
+			}
+		}
+	//Searches Failed
+	return false;
 }
 
 
